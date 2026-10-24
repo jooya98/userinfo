@@ -1,0 +1,14 @@
+{
+  "name": "userinfo-telegram-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A minimal Telegram ID helper running on Cloudflare Workers.",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/index.js && node --check src/identifiers.js && node --check src/telegram.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
