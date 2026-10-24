@@ -1,0 +1,7 @@
+name = "userinfo-bot-dev"
+main = "src/index.js"
+compatibility_date = "2026-10-25"
+workers_dev = true
+
+# Configure BOT_TOKEN and TELEGRAM_WEBHOOK_SECRET as Worker secrets.
+# Never put either value in this file or commit a .dev.vars file.
