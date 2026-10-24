@@ -30,7 +30,7 @@ function responseJson(value, status = 200) {
   });
 }
 
-function commandOf(text = "") {
+export function commandOf(text = "") {
   const match = String(text).trim().match(/^\/([a-z0-9_]+)(?:@[a-z0-9_]+)?(?:\s+([\s\S]*))?$/i);
   return match ? { command: match[1].toLowerCase(), args: (match[2] || "").trim() } : null;
 }
@@ -66,7 +66,7 @@ function forwardLines(origin) {
   return rows.filter(Boolean);
 }
 
-function describeMessage(message) {
+export function describeMessage(message) {
   const chat = message.chat || {};
   const rows = [
     "<b>اطلاعات شناسه</b>",
@@ -102,7 +102,7 @@ async function lookupPublicChat(env, chatReference) {
     line("نوع", result.type),
     result.title ? line("عنوان", result.title) : null,
     result.username ? line("نام کاربری", `@${result.username}`) : null,
-    result.description ? line("توضیحات", escapeHtml(result.description).slice(0, 500)) : null,
+    result.description ? line("توضیحات", result.description.slice(0, 500)) : null,
   ].filter(Boolean);
   return rows.join("\n");
 }
@@ -247,4 +247,4 @@ export default {
   },
 };
 
-export { commandOf, describeMessage, handleInlineQuery, processUpdate };
+export { handleInlineQuery, processUpdate };
