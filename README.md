@@ -90,3 +90,9 @@ Enable Inline Mode for the bot through BotFather before trying the inline featur
 ## License
 
 MIT
+
+## Expanded Inline mode
+
+The Inline handler offers multiple options for an empty query: the requesting user's ID, Inline help, public group/channel lookup instructions, and forward-message guidance. Query me or id for your own ID; use @username, chat @username, or id @username to try a public group/channel lookup; use help for syntax.
+
+Inline Query updates do not contain the target chat's ID, a replied-to message, or another message's forward-origin metadata. Use a normal /id command or forward to the bot's private chat for those cases. Telegram's Bot API cannot generally resolve arbitrary people from display names or usernames.

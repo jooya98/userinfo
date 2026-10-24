@@ -1,5 +1,6 @@
 import { displayName, escapeHtml, getForwardOrigin, toId } from "./identifiers.js";
 import { sendMessage, telegramApi } from "./telegram.js";
+import { handleInlineQuery as handleInlineQueryV2 } from "./inline.js";
 
 const HELP_TEXT = [
   "<b>UserInfo — راهنمای بات</b>",
@@ -183,7 +184,7 @@ async function handleInlineQuery(query, env) {
 
 async function processUpdate(update, env) {
   if (update.inline_query) {
-    await handleInlineQuery(update.inline_query, env);
+    await handleInlineQueryV2(update.inline_query, env);
     return;
   }
   if (update.message) {
