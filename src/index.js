@@ -1,6 +1,5 @@
 import { displayName, escapeHtml, getForwardOrigin, toId } from "./identifiers.js";
 import { sendMessage, telegramApi } from "./telegram.js";
-import { handleInlineQuery as handleInlineQueryV2 } from "./inline.js";
 
 const HELP_TEXT = [
   "<b>UserInfo — راهنمای بات</b>",
@@ -12,7 +11,6 @@ const HELP_TEXT = [
   "/help — نمایش این راهنما",
   "",
   "برای بررسی مبدأ یک پیام فورواردشده، آن را در گفت‌وگوی خصوصی با بات فوروارد کنید.",
-  "برای دریافت شناسهٔ خود در هر گفت‌وگو، بات را در Inline Mode فراخوانی کنید (پس از فعال‌کردن این قابلیت در BotFather).",
   "",
   "محدودیت تلگرام: شناسهٔ هر کاربر دلخواهی را نمی‌توان صرفاً از روی @username بازیابی کرد؛ اطلاعات فوروارد هم ممکن است پنهان باشد."
 ].join("\n");
@@ -153,40 +151,7 @@ async function handleMessage(message, env) {
   }
 }
 
-async function handleInlineQuery(query, env) {
-  const user = query?.from;
-  if (!query?.id || !user?.id) return;
-
-  const text = [
-    "<b>شناسهٔ حساب تلگرام شما</b>",
-    line("User ID", toId(user.id)),
-    line("نام", displayName(user)),
-    user.username ? line("نام کاربری", `@${user.username}`) : null,
-  ].filter(Boolean).join("\n");
-
-  await telegramApi(env, "answerInlineQuery", {
-    inline_query_id: query.id,
-    is_personal: true,
-    cache_time: 0,
-    results: [{
-      type: "article",
-      id: `user-${user.id}`,
-      title: "نمایش شناسهٔ تلگرام من",
-      description: `User ID: ${user.id}`,
-      input_message_content: {
-        message_text: text,
-        parse_mode: "HTML",
-        link_preview_options: { is_disabled: true },
-      },
-    }],
-  });
-}
-
 async function processUpdate(update, env) {
-  if (update.inline_query) {
-    await handleInlineQueryV2(update.inline_query, env);
-    return;
-  }
   if (update.message) {
     await handleMessage(update.message, env);
     return;
@@ -248,4 +213,4 @@ export default {
   },
 };
 
-export { handleInlineQuery, processUpdate };
+export { processUpdate };

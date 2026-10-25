@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { commandOf, describeMessage } from "../src/index.js";
+import { commandOf, describeMessage, processUpdate } from "../src/index.js";
 
 test("parses basic commands and optional arguments", () => {
   assert.deepEqual(commandOf("/id"), { command: "id", args: "" });
@@ -59,4 +59,9 @@ test("escapes chat and user supplied HTML in message details", () => {
   assert.match(text, /&lt;b&gt;user&lt;\/b&gt;/);
   assert.doesNotMatch(text, /<img src=x/);
   assert.doesNotMatch(text, /<b>user<\/b>/);
+});
+
+
+test("ignores inline queries because inline mode is disabled", async () => {
+  await processUpdate({ inline_query: { id: "q-disabled", query: "", from: { id: 1 } } }, {});
 });
